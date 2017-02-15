@@ -5,7 +5,6 @@ import play.api.mvc._
 import services.SponService
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
 
 class HomeController @Inject() (sponService: SponService) extends Controller {
 

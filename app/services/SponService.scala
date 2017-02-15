@@ -19,16 +19,19 @@ class SponService @Inject() (ws: WSClient) {
       val jsoup = Jsoup.parse(response.body)
       val teasers = jsoup.body().select("a[title]")
       teasers.toList.map(teaser => {
-        val title = teaser.attr("title")
+        val title = sanitize(teaser.attr("title"))
         val link = teaser.attr("href")
         Data(title, link)
-      }).distinct.filter(_.link.endsWith(".html"))
+      }).filter(_.link.endsWith(".html")).distinct
     }
 
   def content(path: String): Future[Seq[Data]] =
     ws.url(prefix + "/" + path).get.map { response =>
       val jsoup = Jsoup.parse(response.body)
       val cs = jsoup.body().select("p")
-      cs.toList.map(elem => Data("", elem.text()))
+      cs.toList.map(elem => Data(sanitize(elem.text()), ""))
     }
+
+  private def sanitize(s: String) =
+    s.toLowerCase().replaceAll("\"", "").replaceAll("spiegel", "igel").replaceAll("online", "allein")
 }

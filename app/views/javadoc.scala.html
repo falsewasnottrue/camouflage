@@ -68,7 +68,7 @@
         var titles=[@Html(ds.map(_.t).mkString(","))];
         $('tr', top.frames['classFrame'].document).each(function(i,e) {
             if (i<links.length) {
-                $(e).find('a').attr("href",  '/article' + links[i]);
+                $(e).find('a').attr("href",  '/article' + links[i]).attr('target', '_top');
                 $(e).find('.block').text(titles[i]);
             }
         });
