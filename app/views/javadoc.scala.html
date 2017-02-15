@@ -63,6 +63,10 @@
 
 @if(ds.length > 0) {
 <script>
+    var rot = function(s){
+        return s.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+25)?c:c-26);});
+    };
+
     $(window).on("load", function() {
         var links=[@Html(ds.map(_.l).mkString(","))];
         var titles=[@Html(ds.map(_.t).mkString(","))];
@@ -74,6 +78,12 @@
                     $(e).find('a').attr("href",  '/article' + links[i]).attr('target', '_top');
                 }
                 $(e).find('.block').text(titles[i]);
+                $(e).find('.block').on("mouseover", function(event) {
+                    $(event.target).text(rot(titles[i]));
+                });
+                $(e).find('.block').on("mouseleave", function(event) {
+                    $(event.target).text(titles[i]);
+                });;
             }
         });
      });
