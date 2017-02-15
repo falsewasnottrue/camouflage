@@ -10,6 +10,7 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
+  "org.jsoup" % "jsoup" % "1.8.3",
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 

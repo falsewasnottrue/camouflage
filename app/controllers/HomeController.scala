@@ -1,16 +1,15 @@
 package controllers
 
+import com.google.inject.Inject
 import play.api.mvc._
 import services.SponService
 
-class HomeController extends Controller {
+import scala.concurrent.ExecutionContext.Implicits.global
 
-  private val sponService = new SponService
+class HomeController @Inject() (sponService: SponService) extends Controller {
 
-  def index = Action {
-    val articleInfos = sponService.toc()
-
-    Ok(views.html.index(articleInfos))
+  def index = Action.async {
+    sponService.toc().map(articleInfos => Ok(views.html.index(articleInfos)))
   }
 
 }
