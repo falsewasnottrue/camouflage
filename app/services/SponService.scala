@@ -22,7 +22,10 @@ class SponService @Inject() (ws: WSClient) {
         val title = sanitize(teaser.attr("title"))
         val link = teaser.attr("href")
         Data(title, link)
-      }).filter(_.link.endsWith(".html")).distinct
+      }).filter(_.link.endsWith(".html")).
+        filterNot(_.link.startsWith("/video")).
+        filterNot(_.link.startsWith("/fotostrecke")).
+        distinct
     }
 
   def content(path: String): Future[Seq[Data]] =
