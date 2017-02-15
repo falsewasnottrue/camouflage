@@ -1,3 +1,3 @@
 package domain
 
-case class ArticleInfo(title: String, summary: String, link: String)
+case class ArticleInfo(title: String, link: String)

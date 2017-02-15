@@ -12,17 +12,23 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class SponService @Inject() (ws: WSClient) {
 
+  val prefix = "http://www.spiegel.de"
+
   def toc(): Future[Seq[ArticleInfo]] =
-    ws.url("http://www.spiegel.de").get().map { response =>
+    ws.url(prefix).get().map { response =>
       val jsoup = Jsoup.parse(response.body)
       val teasers = jsoup.body().select("a[title]")
       teasers.toList.map(teaser => {
         val title = teaser.attr("title")
         val link = teaser.attr("href")
+        ArticleInfo(title, link)
+      }).distinct.filter(_.link.endsWith(".html"))
+    }
 
-        val summary = "TODO"
-        println(s"TITLE $title")
-        ArticleInfo(title, summary, link)
-      })
+  def content(path: String): Future[Seq[String]] =
+    ws.url(prefix + "/" + path).get.map { response =>
+      val jsoup = Jsoup.parse(response.body)
+      val cs = jsoup.body().select("p")
+      cs.toList.map(_.text())
     }
 }

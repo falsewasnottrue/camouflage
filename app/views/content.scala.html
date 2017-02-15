@@ -1,0 +1,9 @@
+@(content: Seq[String])
+
+@main("Content") {
+
+@for(c <- content) {
+    <p>@c</p>
+}
+
+}
