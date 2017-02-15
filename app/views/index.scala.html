@@ -5,6 +5,6 @@
 @main("Index") {
 
  @for(articleInfo <- articleInfos) {
-  @articleInfo.title
+    <a href="@articleInfo.link">@articleInfo.title</a>
  }
 }
