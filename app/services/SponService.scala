@@ -10,7 +10,7 @@ import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class SponService @Inject() (ws: WSClient) {
+class SponService @Inject() (ws: WSClient) extends FriendlyContentProvider {
 
   val prefix = "http://www.spiegel.de"
 

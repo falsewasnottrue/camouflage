@@ -1,6 +1,6 @@
 @import domain.Data
 
-@(ds: Seq[Data])
+@(ds: Seq[Data], prefix: String)
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <!-- saved from url=(0041)http://docs.oracle.com/javase/8/docs/api/ -->
@@ -73,9 +73,9 @@
         $('tr', top.frames['classFrame'].document).each(function(i,e) {
             if (i<links.length) {
                 if (links[i] == "") {
-                    $(e).find('a').attr("href",  '/').attr('target', '_top');
+                    $(e).find('a').attr("href",  '/@prefix').attr('target', '_top');
                 } else {
-                    $(e).find('a').attr("href",  '/article' + links[i]).attr('target', '_top');
+                    $(e).find('a').attr("href",  '/@prefix/article' + links[i]).attr('target', '_top');
                 }
                 $(e).find('.block').text(titles[i]);
                 $(e).find('.block').on("mouseover", function(event) {
